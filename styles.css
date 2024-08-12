@@ -11,6 +11,7 @@ body {
    flex-wrap: wrap;
    align-items: center;
    justify-content: space-evenly;
+   color: white;
 }
 
 #game {
@@ -108,8 +109,8 @@ body {
 }
 
 #answer-input {
-   height: 50px;
    width: 100%;
+   padding: 10px;
    margin-top: 15px;
    font-size: 1.2rem;
 }
@@ -126,5 +127,46 @@ body {
 }
 
 #submit-answer:hover {
+   background-color: #04b4d4;
+}
+
+/* Estilos para el modal de felicitación */
+#win-modal p {
+   font-size: 2rem;
+   margin-bottom: 20px;
+}
+
+#play-again {
+   padding: 10px 20px;
+   font-size: 1.2rem;
+   cursor: pointer;
+   background-color: #05d1fe;
+   color: white;
+   border: none;
+   border-radius: 5px;
+}
+
+#play-again:hover {
+   background-color: #04b4d4;
+}
+
+/* Estilos para el modal de instrucciones */
+#instructions-modal ul {
+   text-align: left;
+   padding-left: 20px;
+}
+
+#instructions-ok {
+   margin-top: 15px;
+   padding: 10px 20px;
+   font-size: 1.2rem;
+   cursor: pointer;
+   background-color: #05d1fe;
+   color: white;
+   border: none;
+   border-radius: 5px;
+}
+
+#instructions-ok:hover {
    background-color: #04b4d4;
 }

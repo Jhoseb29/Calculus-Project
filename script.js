@@ -21,6 +21,7 @@ function activate(e) {
             if (selectedCards[0].querySelectorAll('.face')[0].innerHTML == selectedCards[1].querySelectorAll('.face')[0].innerHTML) {
                selectedCards = [];
                currentMove = 0;
+               checkWin(); // Comprobar si se ha ganado
             } else {
                setTimeout(async () => {
                   let correct = await askQuestion();
@@ -124,14 +125,61 @@ function askQuestion() {
    });
 }
 
-for (let i = 0; i < totalCards; i++) {
-   let div = document.createElement('div');
-   div.innerHTML = cardTemplate;
-   cards.push(div);
-   document.querySelector('#game').append(cards[i]);
-   randomValue();
-   cards[i].querySelectorAll('.face')[0].innerHTML = getFaceValue(valuesUsed[i]);
-   cards[i].querySelectorAll('.card')[0].classList.add('active');  // Mostrar las cartas inicialmente
+function checkWin() {
+   const totalMatched = document.querySelectorAll('.card.active').length;
+   if (totalMatched === totalCards) {
+      setTimeout(() => {
+         document.querySelector('#win-modal').style.display = 'flex';
+      }, 500);
+   }
+}
+
+function resetGame() {
+   // Reinicia las variables y el estado del juego
+   cards = [];
+   selectedCards = [];
+   valuesUsed = [];
+   currentMove = 0;
+   currentAttempts = 0;
+   document.querySelector('#stats').innerHTML = '0 intentos';
+   document.querySelector('#game').innerHTML = ''; // Limpia el tablero de juego
+   document.querySelector('#win-modal').style.display = 'none'; // Oculta el modal de victoria
+
+   // Recrea las cartas
+   for (let i = 0; i < totalCards; i++) {
+      let div = document.createElement('div');
+      div.innerHTML = cardTemplate;
+      cards.push(div);
+      document.querySelector('#game').append(cards[i]);
+      randomValue();
+      cards[i].querySelectorAll('.face')[0].innerHTML = getFaceValue(valuesUsed[i]);
+      cards[i].querySelectorAll('.card')[0].classList.add('active');  // Mostrar las cartas inicialmente
+   }
+
+   // Deshabilita los clicks hasta que se inicie el juego
+   document.querySelectorAll('.card').forEach(card => {
+      card.classList.remove('active');
+      card.removeEventListener('click', activate);
+   });
+
+   setTimeout(() => {
+      document.querySelectorAll('.card').forEach(card => {
+         card.addEventListener('click', activate);  // Habilitar los clicks solo después de iniciar el juego
+      });
+   }, 600);
+}
+
+function initializeGame() {
+   // Crear y mostrar las cartas al cargar la página
+   for (let i = 0; i < totalCards; i++) {
+      let div = document.createElement('div');
+      div.innerHTML = cardTemplate;
+      cards.push(div);
+      document.querySelector('#game').append(cards[i]);
+      randomValue();
+      cards[i].querySelectorAll('.face')[0].innerHTML = getFaceValue(valuesUsed[i]);
+      cards[i].querySelectorAll('.card')[0].classList.add('active');  // Mostrar las cartas inicialmente
+   }
 }
 
 document.querySelector('#start-button').addEventListener('click', () => {
@@ -145,3 +193,16 @@ document.querySelector('#start-button').addEventListener('click', () => {
       });
    }, 600);  // Tiempo para que las cartas se volteen
 });
+
+document.querySelector('#play-again').addEventListener('click', resetGame);
+
+document.querySelector('#instructions-ok').addEventListener('click', () => {
+   document.querySelector('#instructions-modal').style.display = 'none';
+   document.querySelector('#start-button').style.display = 'block';
+});
+
+// Mostrar el modal de instrucciones al cargar la página
+window.onload = () => {
+   initializeGame(); // Crear las cartas al cargar la página
+   document.querySelector('#instructions-modal').style.display = 'flex';
+};

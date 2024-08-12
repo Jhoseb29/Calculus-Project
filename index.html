@@ -7,7 +7,21 @@
       <div id="stats">0 intentos</div>
       <div id="wrapper">
          <div id="game"></div>
-         <button id="start-button">Start</button>
+         <button id="start-button" style="display: none;">Start</button>
+      </div>
+
+      <!-- Modal para instrucciones -->
+      <div id="instructions-modal" class="modal">
+         <div class="modal-content">
+            <p>Instrucciones:</p>
+            <ul>
+               <li>Al iniciar el juego, las cartas se mostrarán brevemente.</li>
+               <li>Haz clic en dos cartas para intentar emparejarlas.</li>
+               <li>Si las cartas no coinciden, deberás responder una pregunta de cálculo.</li>
+               <li>Gana el juego emparejando todas las cartas.</li>
+            </ul>
+            <button id="instructions-ok">Ok</button>
+         </div>
       </div>
 
       <!-- Modal para preguntas -->
@@ -16,6 +30,14 @@
             <p id="question-text"></p>
             <input type="text" id="answer-input" placeholder="Tu respuesta...">
             <button id="submit-answer">Responder</button>
+         </div>
+      </div>
+
+      <!-- Modal de felicitación -->
+      <div id="win-modal" class="modal">
+         <div class="modal-content">
+            <p>¡Felicitaciones! ¡Has ganado!</p>
+            <button id="play-again">Jugar de nuevo</button>
          </div>
       </div>
 
